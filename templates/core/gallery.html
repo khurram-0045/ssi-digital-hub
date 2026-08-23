@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Event Gallery — Student Success Initiative{% endblock %}
+
+{% block content %}
+<section class="section" style="padding: 30px 0 60px 0;">
+    <div class="container" style="max-width: 1200px;">
+        
+        <!-- Header -->
+        <div style="text-align: center; max-width: 650px; margin: 0 auto 36px auto;">
+            <div style="display: inline-block; background: var(--light-green); color: var(--deep-green); font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; border: 1px solid #c8dfcd;">
+                📸 Community Moments
+            </div>
+            <h2 style="font-size: 32px; color: var(--deep-green); margin: 0 0 8px 0; font-weight: 800;">
+                SSI Event <span style="color: var(--ssi-green);">Gallery</span>
+            </h2>
+            <p style="color: #465248; font-size: 13.5px; line-height: 1.5; margin: 0;">
+                Explore snapshots from our physical masterclasses, training sessions, campus meetups, and community activities.
+            </p>
+        </div>
+
+        <!-- Gallery Grid -->
+        {% if photos %}
+        <div class="grid-3-col">
+            {% for photo in photos %}
+            <div class="interactive-card" style="background: var(--white); border-radius: 16px; border: 1px solid #e2e8e3; overflow: hidden; box-shadow: 0 8px 30px rgba(2, 62, 36, 0.04); display: flex; flex-direction: column;">
+                
+                {% if photo.image %}
+                <div style="height: 220px; background-size: cover; background-position: center; background-image: url('{{ photo.image.url }}');"></div>
+                {% endif %}
+
+                <div style="padding: 22px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        {% if photo.event_date %}
+                        <div style="font-size: 12px; color: #7a8a7c; font-weight: 600; margin-bottom: 6px;">📅 {{ photo.event_date|date:"M d, Y" }}</div>
+                        {% endif %}
+                        <h4 style="font-size: 17px; color: var(--deep-green); margin: 0 0 6px 0; font-weight: 700;">{{ photo.title }}</h4>
+                        {% if photo.description %}
+                        <p style="color: #465248; font-size: 13px; line-height: 1.5; margin: 0;">{{ photo.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="background: var(--white); padding: 40px; border-radius: 16px; border: 1px solid #e2e8e3; text-align: center; color: #7a8a7c; font-size: 14px;">
+            📸 No gallery photos uploaded yet. Check back soon for event highlights!
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}

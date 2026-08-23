@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Resources & Materials — Student Success Initiative{% endblock %}
+
+{% block content %}
+<section class="section" style="padding: 20px 0 50px 0;">
+    <div class="container" style="max-width: 1200px;">
+        
+        <!-- Pulled-Up Header with Pill Badge -->
+        <div style="text-align: center; max-width: 650px; margin: 0 auto 24px auto;">
+            <div style="display: inline-block; background: var(--light-green); color: var(--deep-green); font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; border: 1px solid #c8dfcd;">
+                📚 Downloadable Hub
+            </div>
+            <h2 style="font-size: 32px; color: var(--deep-green); margin: 0 0 8px 0; font-weight: 800;">
+                Learning <span style="color: var(--ssi-green);">Resources</span>
+            </h2>
+            <p style="color: #465248; font-size: 13.5px; line-height: 1.5; margin: 0;">
+                Access study notes, cheat sheets, code templates, and configuration files uploaded by instructors.
+            </p>
+        </div>
+
+        <!-- 4-Column Compact Resource Grid -->
+        <div class="resource-grid">
+            
+            {% for res in resources %}
+            <div class="resource-card">
+                
+                <div>
+                    <!-- Optional Thumbnail or Default SSI Banner -->
+                    {% if res.thumbnail %}
+                    <div style="height: 100px; border-radius: 8px; background-size: cover; background-position: center; background-image: url('{{ res.thumbnail.url }}'); margin-bottom: 12px;"></div>
+                    {% else %}
+                    <div style="height: 80px; border-radius: 8px; background: linear-gradient(135deg, var(--deep-green), var(--ssi-green)); display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 700; font-size: 12px; margin-bottom: 12px;">
+                        🌿 SSI Resource
+                    </div>
+                    {% endif %}
+
+                    <!-- Category & Date Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <span style="background: var(--light-green); color: var(--deep-green); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">
+                            {{ res.category }}
+                        </span>
+                        <span style="font-size: 10.5px; color: #7a8a7c;">{{ res.uploaded_at|date:"M d, Y" }}</span>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 style="font-size: 16px; color: var(--deep-green); margin: 0 0 6px 0; font-weight: 700;">{{ res.title }}</h3>
+                    <p style="color: #465248; font-size: 12.5px; line-height: 1.4; margin: 0 0 16px 0;">
+                        {{ res.description|truncatechars:80 }}
+                    </p>
+                </div>
+
+                <!-- Action Button -->
+                <div>
+                    {% if res.file %}
+                    <a href="{{ res.file.url }}" download class="btn btn-primary btn-sm btn-block" style="text-align: center; font-size: 11px; padding: 6px;">
+                        📥 Download File
+                    </a>
+                    {% elif res.external_url %}
+                    <a href="{{ res.external_url }}" target="_blank" class="btn btn-outline btn-sm btn-block" style="text-align: center; font-size: 11px; padding: 6px;">
+                        🔗 Access Link
+                    </a>
+                    {% endif %}
+                </div>
+
+            </div>
+            {% empty %}
+            <div style="grid-column: 1 / -1; padding: 30px; background: var(--light-green); border-radius: var(--radius); color: var(--deep-green); font-weight: 600; text-align: center;">
+                No resources uploaded yet. Add downloadable materials via the Django Admin panel!
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+{% endblock %}

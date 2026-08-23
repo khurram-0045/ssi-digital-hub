@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SSI Digital Hub{% endblock %}</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+<!-- Navigation Bar -->
+<header style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #e2e8e3; padding: 12px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(2, 62, 36, 0.03);">
+    <div class="container" style="max-width: 1200px; display: flex; justify-content: space-between; align-items: center;">
+        
+        <!-- Official Brand Logo -->
+        <a href="{% url 'home' %}" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+            <img src="{% static 'images/ssi_logo.png' %}" alt="SSI Logo" style="height: 52px; width: auto; object-fit: contain;">
+            <div style="display: flex; flex-direction: column;">
+                <span style="font-size: 15px; font-weight: 800; color: var(--deep-green); letter-spacing: -0.5px; line-height: 1.1;">SSI DIGITAL HUB</span>
+                <span style="font-size: 8.5px; font-weight: 700; color: #7a8a7c; text-transform: uppercase; letter-spacing: 1px;">Student Success Initiative</span>
+            </div>
+        </a>
+
+        <!-- Dynamic Nav Links -->
+        <nav style="display: flex; align-items: center; gap: 6px;">
+            <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+            <a href="{% url 'sessions_list' %}" class="nav-link {% if request.resolver_match.url_name == 'sessions_list' or request.resolver_match.url_name == 'register_session' %}active{% endif %}">Sessions</a>
+            <a href="{% url 'showcase' %}" class="nav-link {% if request.resolver_match.url_name == 'showcase' or request.resolver_match.url_name == 'submit_project' %}active{% endif %}">Showcase</a>
+            <a href="{% url 'gallery' %}" class="nav-link {% if request.resolver_match.url_name == 'gallery' %}active{% endif %}">Gallery</a>
+            <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
+            <a href="{% url 'team' %}" class="nav-link {% if request.resolver_match.url_name == 'team' %}active{% endif %}">Team</a>
+            <a href="{% url 'resources' %}" class="nav-link {% if request.resolver_match.url_name == 'resources' %}active{% endif %}">Resources</a>
+            <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+        </nav>
+
+        <!-- Auth Actions -->
+        <div style="display: flex; align-items: center; gap: 10px;">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'member_dashboard' %}" class="btn btn-primary btn-sm" style="font-size: 12.5px; padding: 8px 16px;">Dashboard</a>
+            <a href="{% url 'member_logout' %}" class="btn btn-outline btn-sm" style="font-size: 12.5px; padding: 8px 14px;">Logout</a>
+            {% else %}
+            <a href="{% url 'member_login' %}" class="btn btn-outline btn-sm" style="font-size: 12.5px; padding: 8px 14px;">Login</a>
+            <a href="{% url 'member_signup' %}" class="btn btn-primary btn-sm" style="font-size: 12.5px; padding: 8px 16px;">Sign Up</a>
+            {% endif %}
+        </div>
+
+    </div>
+</header>
+    <!-- Main Content Block -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer style="background: var(--deep-green); color: var(--white); padding: 40px 0 20px 0; margin-top: 60px;">
+        <div class="container" style="max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 30px;">
+            
+            <div>
+                <h3 style="color: var(--white); font-size: 18px; margin-bottom: 10px; font-weight: 700;">Student Success Initiative</h3>
+                <p style="color: #c8dfcd; font-size: 13px; line-height: 1.5; margin: 0;">
+                    Empowering students to discover their purpose, build character, and achieve professional excellence.
+                </p>
+            </div>
+
+            <div>
+                <h4 style="color: var(--white); font-size: 15px; margin-bottom: 10px; font-weight: 700;">Quick Links</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.8;">
+                    <li><a href="{% url 'home' %}" style="color: #c8dfcd; text-decoration: none;">Home</a></li>
+                    <li><a href="{% url 'sessions_list' %}" style="color: #c8dfcd; text-decoration: none;">Masterclass Sessions</a></li>
+                    <li><a href="{% url 'about' %}" style="color: #c8dfcd; text-decoration: none;">About Us</a></li>
+                    <li><a href="{% url 'team' %}" style="color: #c8dfcd; text-decoration: none;">Our Team</a></li>
+                    <li><a href="{% url 'resources' %}" style="color: #c8dfcd; text-decoration: none;">Resources</a></li>
+                    <li><a href="{% url 'contact' %}" style="color: #c8dfcd; text-decoration: none;">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="color: var(--white); font-size: 15px; margin-bottom: 10px; font-weight: 700;">Contact Info</h4>
+                <p style="color: #c8dfcd; font-size: 13px; margin: 0 0 8px 0;">
+                    🟢 WhatsApp: <a href="https://wa.me/923001234567" target="_blank" style="color: var(--white); text-decoration: underline;">+92 300 1234567</a>
+                </p>
+                <p style="color: #c8dfcd; font-size: 13px; margin: 0 0 8px 0;">
+                    ✉️ Email: <a href="mailto:support@ssihub.edu.pk" style="color: var(--white); text-decoration: underline;">support@ssihub.edu.pk</a>
+                </p>
+                <p style="color: #c8dfcd; font-size: 13px; margin: 0 0 8px 0;">
+                    🔗 LinkedIn: <a href="https://linkedin.com/company/student-success-initiative" target="_blank" style="color: var(--white); text-decoration: underline;">SSI Official Page</a>
+                </p>
+                <p style="color: #c8dfcd; font-size: 13px; margin: 0;">
+                    📍 Location: Islamabad, Pakistan
+                </p>
+            </div>
+
+        </div>
+        
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center; font-size: 12px; color: #c8dfcd;">
+            &copy; 2026 Student Success Initiative (SSI). All rights reserved. Developed by Khurram Shehzad.
+        </div>
+    </footer>
+</body>
+</html>

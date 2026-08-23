@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Success Initiative — Digital Hub{% endblock %}
+
+{% block content %}
+<!-- Hero Section with Dynamic Visuals & Rich Contrast -->
+<section class="section" style="padding: 50px 0 70px 0; background: linear-gradient(180deg, #f3f8f4 0%, #ffffff 100%); position: relative; overflow: hidden;">
+    
+    <!-- Decorative background glow -->
+    <div style="position: absolute; top: -100px; right: -100px; width: 450px; height: 450px; background: rgba(138, 198, 154, 0.15); border-radius: 50%; pointer-events: none; filter: blur(60px);"></div>
+
+    <div class="container" style="max-width: 1200px; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; position: relative; z-index: 1;">
+        
+        <!-- Left Column: Compelling Hook & Actions -->
+        <div>
+            <div style="display: inline-block; background: var(--light-green); color: var(--deep-green); font-size: 11.5px; font-weight: 800; padding: 5px 16px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; border: 1px solid #c8dfcd;">
+                🌱 Learn • Improve • Succeed
+            </div>
+            
+            <h1 style="font-size: 46px; color: var(--deep-green); line-height: 1.15; font-weight: 800; margin-bottom: 20px; letter-spacing: -1px;">
+                Empowering students through <span style="color: var(--ssi-green);">guidance</span>, learning, and <span style="color: var(--ssi-green);">growth</span>.
+            </h1>
+            
+            <p style="color: #465248; font-size: 15px; line-height: 1.65; margin-bottom: 28px;">
+                Student Success Initiative (SSI) empowers students to discover purpose, build character, and unlock professional opportunities. Join live masterclasses, access expert mentorship, and lead your future.
+            </p>
+            
+            <div style="display: flex; gap: 14px; margin-bottom: 36px;">
+                <a href="{% url 'sessions_list' %}" class="btn btn-primary" style="padding: 12px 26px; font-size: 14.5px; font-weight: 700; box-shadow: 0 6px 20px rgba(2,62,36,0.15);">Explore Masterclasses</a>
+                <a href="{% url 'about' %}" class="btn btn-outline" style="padding: 12px 26px; font-size: 14.5px; font-weight: 700;">About SSI</a>
+            </div>
+
+            <!-- Floating Highlight Mini-Card -->
+            <div style="display: flex; align-items: center; gap: 16px; background: var(--white); padding: 16px 22px; border-radius: 14px; border: 1px solid #e2e8e3; border-left: 5px solid var(--ssi-green); box-shadow: 0 8px 30px rgba(2,62,36,0.04); max-width: 420px;">
+                <div style="font-size: 28px; background: var(--light-green); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 12px;">🌟</div>
+                <div>
+                    <div style="font-weight: 800; font-size: 14px; color: var(--deep-green);">Student Success Initiative (SSI)</div>
+                    <div style="font-size: 12.5px; color: #5a6a5c;">Building character & future leaders together.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Dynamic Featured Session or Brilliant Fallback Art -->
+        <div>
+            {% if featured_session %}
+            <div style="background: var(--white); border-radius: 20px; border: 1px solid #e2e8e3; overflow: hidden; box-shadow: 0 15px 40px rgba(2, 62, 36, 0.08);">
+                {% if featured_session.thumbnail %}
+                <div style="height: 200px; background-size: cover; background-position: center; background-image: url('{{ featured_session.thumbnail.url }}');"></div>
+                {% else %}
+                <div style="height: 160px; background: linear-gradient(135deg, var(--deep-green), var(--ssi-green)); display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 800; font-size: 18px; letter-spacing: 0.5px;">
+                    🌿 SSI Live Masterclass Banner
+                </div>
+                {% endif %}
+
+                <div style="padding: 28px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="background: #e6f4ea; color: #137333; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; border: 1px solid #ceead6;">
+                            🟢 NEXT LIVE SESSION
+                        </span>
+                        <span style="font-size: 12.5px; color: #465248; font-weight: 600;">📅 {{ featured_session.date|date:"M d, Y" }}</span>
+                    </div>
+
+                    <h3 style="font-size: 21px; color: var(--deep-green); margin: 0 0 8px 0; font-weight: 800;">{{ featured_session.title }}</h3>
+                    <p style="color: #465248; font-size: 13.5px; line-height: 1.5; margin: 0 0 16px 0;">{{ featured_session.description|truncatechars:110 }}</p>
+
+                    <div style="background: var(--soft-gray); padding: 12px 16px; border-radius: 10px; font-size: 13px; color: #465248; margin-bottom: 20px; display: flex; flex-direction: column; gap: 4px;">
+                        {% if featured_session.venue %}<div>📍 <strong>Venue:</strong> {{ featured_session.venue }}</div>{% endif %}
+                        {% if featured_session.speaker_name %}<div>🎤 <strong>Speaker:</strong> {{ featured_session.speaker_name }}</div>{% endif %}
+                    </div>
+
+                    <a href="{% url 'register_session' featured_session.id %}" class="btn btn-primary btn-block" style="text-align: center; font-size: 14px; padding: 12px; font-weight: 700;">Secure Your Seat &rarr;</a>
+                </div>
+            </div>
+            {% else %}
+            <!-- Brilliant Visual Fallback Card (When No Session is Posted) -->
+            <div style="background: linear-gradient(135deg, #023e24 0%, #064e2d 100%); border-radius: 20px; padding: 45px 35px; color: var(--white); box-shadow: 0 15px 40px rgba(2,62,36,0.15); text-align: center; border: 1px solid rgba(138,198,154,0.3); position: relative; overflow: hidden;">
+                
+                <div style="position: absolute; right: -30px; bottom: -30px; font-size: 140px; opacity: 0.07; pointer-events: none;">🌱</div>
+                
+                <div style="width: 70px; height: 70px; background: rgba(138,198,154,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 20px auto; border: 2px solid rgba(138,198,154,0.4);">
+                    🎓
+                </div>
+
+                <span style="background: rgba(138,198,154,0.25); color: #c8dfcd; font-size: 11px; font-weight: 800; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 12px;">
+                    SSI Community Hub
+                </span>
+
+                <h3 style="font-size: 24px; font-weight: 800; margin: 0 0 10px 0; color: var(--white);">New Masterclasses Coming Soon!</h3>
+                <p style="color: #c8dfcd; font-size: 14px; line-height: 1.6; max-width: 380px; margin: 0 auto 24px auto;">
+                    Our team is preparing high-impact technical workshops, guest lectures, and skill development sessions. Stay tuned!
+                </p>
+
+                <a href="{% url 'sessions_list' %}" class="btn" style="background: var(--white); color: var(--deep-green); font-weight: 800; padding: 12px 28px; border-radius: 30px; font-size: 13.5px; text-decoration: none; display: inline-block; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                    View Past Archive &rarr;
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</section>
+
+<!-- Impact Stats Bar -->
+<div class="container" style="margin-top: -30px; position: relative; z-index: 2; margin-bottom: 50px;">
+    <div style="background: var(--white); border-radius: 16px; border: 1px solid #e2e8e3; padding: 30px; box-shadow: 0 10px 35px rgba(2,62,36,0.06); display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; text-align: center;">
+        <div>
+            <div style="font-size: 32px; font-weight: 800; color: var(--deep-green); margin-bottom: 4px;">1,250+</div>
+            <div style="font-size: 13px; color: #5a6a5c; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Students Reached</div>
+        </div>
+        <div>
+            <div style="font-size: 32px; font-weight: 800; color: var(--ssi-green); margin-bottom: 4px;">42+</div>
+            <div style="font-size: 13px; color: #5a6a5c; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Sessions Conducted</div>
+        </div>
+        <div>
+            <div style="font-size: 32px; font-weight: 800; color: var(--deep-green); margin-bottom: 4px;">18+</div>
+            <div style="font-size: 13px; color: #5a6a5c; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Industry Speakers</div>
+        </div>
+        <div>
+            <div style="font-size: 32px; font-weight: 800; color: var(--ssi-green); margin-bottom: 4px;">15+</div>
+            <div style="font-size: 13px; color: #5a6a5c; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Community Activities</div>
+        </div>
+    </div>
+</div>
+
+<!-- About SSI Section Preview on Homepage -->
+<section class="section" style="padding: 40px 0; background: var(--white);">
+    <div class="container" style="max-width: 1100px;">
+        <div style="text-align: center; max-width: 650px; margin: 0 auto 30px auto;">
+            <div style="display: inline-block; background: var(--light-green); color: var(--deep-green); font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; border: 1px solid #c8dfcd;">
+                🌱 Who We Are
+            </div>
+            <h2 style="font-size: 32px; color: var(--deep-green); margin: 0 0 8px 0; font-weight: 800;">
+                About Student Success Initiative <span style="color: var(--ssi-green);">(SSI)</span>
+            </h2>
+            <p style="color: #465248; font-size: 13.5px; line-height: 1.5; margin: 0;">
+                Empowering students to discover their purpose, build character, unlock professional opportunities, and create meaningful impact.
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+            <div class="interactive-card" style="background: var(--soft-gray); padding: 28px; border-radius: 16px; border-top: 4px solid var(--ssi-green);">
+                <div style="font-size: 26px; margin-bottom: 12px;">🎯</div>
+                <h3 style="font-size: 17.5px; color: var(--deep-green); margin-bottom: 8px; font-weight: 700;">Our Core Mission</h3>
+                <p style="color: #465248; font-size: 13px; line-height: 1.5; margin: 0;">
+                    To bridge the gap between academic learning and industry demands by providing structured mentorship, hands-on technical workshops, and career guidance.
+                </p>
+            </div>
+
+            <div class="interactive-card" style="background: var(--soft-gray); padding: 28px; border-radius: 16px; border-top: 4px solid var(--deep-green);">
+                <div style="font-size: 26px; margin-bottom: 12px;">🌱</div>
+                <h3 style="font-size: 17.5px; color: var(--deep-green); margin-bottom: 8px; font-weight: 700;">Our Vision</h3>
+                <p style="color: #465248; font-size: 13px; line-height: 1.5; margin: 0;">
+                    To cultivate a resilient generation of future leaders, innovators, and skilled professionals equipped with both technical excellence and strong personal character.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Interactive Contact Cards Section -->
+<section class="section" style="padding: 50px 0; background: var(--soft-gray); border-top: 1px solid #e2e8e3;">
+    <div class="container" style="max-width: 1100px;">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto 30px auto;">
+            <span style="display: inline-block; background: var(--light-green); color: var(--deep-green); font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; border: 1px solid #c8dfcd;">
+                💬 Reach Out Anytime
+            </span>
+            <h2 style="font-size: 28px; color: var(--deep-green); margin: 0 0 8px 0; font-weight: 800;">Get in Touch with SSI</h2>
+            <p style="color: #465248; font-size: 13.5px; margin: 0;">Have a question or want to collaborate? Connect with us through any of the channels below.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+            <a href="https://wa.me/923001234567" target="_blank" class="interactive-card" style="text-decoration: none; background: var(--white); padding: 24px; border-radius: 14px; text-align: center; display: block;">
+                <div style="font-size: 28px; margin-bottom: 8px;">🟢</div>
+                <h4 style="font-size: 14.5px; color: var(--deep-green); margin: 0 0 4px 0; font-weight: 700;">WhatsApp Chat</h4>
+                <p style="color: #465248; font-size: 12px; margin: 0;">+92 300 1234567</p>
+            </a>
+
+            <a href="mailto:support@ssihub.edu.pk" class="interactive-card" style="text-decoration: none; background: var(--white); padding: 24px; border-radius: 14px; text-align: center; display: block;">
+                <div style="font-size: 28px; margin-bottom: 8px;">✉️</div>
+                <h4 style="font-size: 14.5px; color: var(--deep-green); margin: 0 0 4px 0; font-weight: 700;">Email Us</h4>
+                <p style="color: #465248; font-size: 12px; margin: 0;">support@ssihub.edu.pk</p>
+            </a>
+
+            <a href="https://linkedin.com/company/student-success-initiative" target="_blank" class="interactive-card" style="text-decoration: none; background: var(--white); padding: 24px; border-radius: 14px; text-align: center; display: block;">
+                <div style="font-size: 28px; margin-bottom: 8px;">🔗</div>
+                <h4 style="font-size: 14.5px; color: var(--deep-green); margin: 0 0 4px 0; font-weight: 700;">LinkedIn</h4>
+                <p style="color: #465248; font-size: 12px; margin: 0;">Connect with SSI</p>
+            </a>
+
+            <a href="https://maps.google.com" target="_blank" class="interactive-card" style="text-decoration: none; background: var(--white); padding: 24px; border-radius: 14px; text-align: center; display: block;">
+                <div style="font-size: 28px; margin-bottom: 8px;">📍</div>
+                <h4 style="font-size: 14.5px; color: var(--deep-green); margin: 0 0 4px 0; font-weight: 700;">Location</h4>
+                <p style="color: #465248; font-size: 12px; margin: 0;">Islamabad, Pakistan</p>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

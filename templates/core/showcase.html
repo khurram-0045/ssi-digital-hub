@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Project Showcase — Student Success Initiative{% endblock %}
+
+{% block content %}
+<section class="section" style="padding: 30px 0 60px 0;">
+    <div class="container" style="max-width: 1200px;">
+        
+        <!-- Header & Submit Button -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px; flex-wrap: wrap; gap: 16px;">
+            <div>
+                <div style="display: inline-block; background: var(--light-green); color: var(--deep-green); font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; border: 1px solid #c8dfcd;">
+                    🚀 Member Innovations
+                </div>
+                <h2 style="font-size: 32px; color: var(--deep-green); margin: 0; font-weight: 800;">
+                    Project <span style="color: var(--ssi-green);">Showcase</span>
+                </h2>
+            </div>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'submit_project' %}" class="btn btn-primary" style="font-size: 13.5px; font-weight: 700; padding: 10px 20px;">+ Share Your Project</a>
+            {% else %}
+            <a href="{% url 'member_login' %}" class="btn btn-outline" style="font-size: 13.5px; font-weight: 700; padding: 10px 20px;">Log in to Submit Project</a>
+            {% endif %}
+        </div>
+
+        <!-- Projects Grid -->
+        {% if projects %}
+        <div class="grid-3-col">
+            {% for project in projects %}
+            <div class="interactive-card" style="background: var(--white); border-radius: 16px; border: 1px solid #e2e8e3; overflow: hidden; box-shadow: 0 8px 30px rgba(2, 62, 36, 0.04); display: flex; flex-direction: column; justify-content: space-between;">
+                
+                <div>
+                    {% if project.screenshot %}
+                    <div style="height: 180px; background-size: cover; background-position: center; background-image: url('{{ project.screenshot.url }}');"></div>
+                    {% else %}
+                    <div style="height: 120px; background: linear-gradient(135deg, var(--deep-green), var(--ssi-green)); display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 700; font-size: 15px;">
+                        💻 SSI Project Showcase
+                    </div>
+                    {% endif %}
+
+                    <div style="padding: 22px;">
+                        <div style="font-size: 11px; font-weight: 800; color: var(--ssi-green); text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
+                            🛠️ {{ project.tech_stack }}
+                        </div>
+                        <h4 style="font-size: 18px; color: var(--deep-green); margin: 0 0 6px 0; font-weight: 700;">{{ project.title }}</h4>
+                        <div style="font-size: 12px; color: #7a8a7c; font-weight: 600; margin-bottom: 12px;">By {{ project.student.username }}</div>
+                        <p style="color: #465248; font-size: 13px; line-height: 1.5; margin: 0 0 16px 0;">{{ project.description|truncatechars:100 }}</p>
+                    </div>
+                </div>
+
+                <div style="padding: 0 22px 22px 22px;">
+                    {% if project.project_url %}
+                    <a href="{{ project.project_url }}" target="_blank" class="btn btn-outline btn-sm btn-block" style="text-align: center; font-size: 12.5px; padding: 8px;">🔗 View Repository / Demo</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="background: var(--white); padding: 40px; border-radius: 16px; border: 1px solid #e2e8e3; text-align: center; color: #7a8a7c; font-size: 14px;">
+            🚀 No projects showcased yet. Be the first member to share your work!
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}

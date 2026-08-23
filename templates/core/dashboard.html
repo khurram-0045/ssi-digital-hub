@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}Member Dashboard — Student Success Initiative{% endblock %}
+
+{% block content %}
+<section class="section" style="padding: 30px 0 60px 0;">
+    <div class="container" style="max-width: 1100px;">
+        
+        <!-- Premium Redesigned Welcome Banner -->
+        <div style="background: linear-gradient(135deg, #023e24 0%, #054f2e 50%, #086b3d 100%); color: var(--white); padding: 40px; border-radius: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 12px 35px rgba(2,62,36,0.15); flex-wrap: wrap; gap: 24px; position: relative; overflow: hidden; border: 1px solid rgba(138, 198, 154, 0.2);">
+            
+            <div style="display: flex; align-items: center; gap: 22px; z-index: 1;">
+                {% if team_member_profile and team_member_profile.photo %}
+                <div style="width: 85px; height: 85px; border-radius: 50%; background-size: cover; background-position: center; border: 3px solid #8ac69a; box-shadow: 0 6px 20px rgba(0,0,0,0.2); background-image: url('{{ team_member_profile.photo.url }}');"></div>
+                {% elif request.user.profile.profile_picture %}
+                <div style="width: 85px; height: 85px; border-radius: 50%; background-size: cover; background-position: center; border: 3px solid #8ac69a; box-shadow: 0 6px 20px rgba(0,0,0,0.2); background-image: url('{{ request.user.profile.profile_picture.url }}');"></div>
+                {% else %}
+                <div style="width: 85px; height: 85px; border-radius: 50%; background: linear-gradient(135deg, var(--ssi-green), #4da671); border: 3px solid #8ac69a; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800; color: var(--white); box-shadow: 0 6px 20px rgba(0,0,0,0.2);">
+                    {{ request.user.username|slice:":2"|upper }}
+                </div>
+                {% endif %}
+
+                <div>
+                    <div style="display: inline-block; background: rgba(138, 198, 154, 0.2); color: #c8dfcd; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; padding: 4px 12px; border-radius: 20px; font-weight: 700; margin-bottom: 8px; border: 1px solid rgba(138, 198, 154, 0.3);">
+                        🌿 {% if team_member_profile %}{{ team_member_profile.role }}{% else %}{{ request.user.profile.designation|default:"SSI Member" }}{% endif %}
+                    </div>
+                    <h2 style="font-size: 28px; color: var(--white); margin: 0 0 4px 0; font-weight: 800; letter-spacing: -0.5px;">Welcome back, {{ request.user.username }}!</h2>
+                    <p style="color: #c8dfcd; font-size: 13.5px; margin: 0; font-weight: 500;">
+                        {{ request.user.email }} 
+                        {% if request.user.profile.university %}• {{ request.user.profile.university }} ({{ request.user.profile.department }}){% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <div style="z-index: 1;">
+                <a href="{% url 'member_logout' %}" class="btn" style="background: rgba(255,255,255,0.1); color: var(--white); border: 1px solid rgba(255,255,255,0.3); font-size: 13px; padding: 10px 20px; border-radius: 30px; font-weight: 600;">
+                    🚪 Logout Securely
+                </a>
+            </div>
+        </div>
+
+        <!-- Organizational Sections Grid (Announcements & Assigned Tasks) -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 30px;">
+            
+            <!-- Announcements Box -->
+            <div style="background: var(--white); padding: 28px; border-radius: 16px; border: 1px solid #e2e8e3; box-shadow: 0 8px 30px rgba(2, 62, 36, 0.04);">
+                <h3 style="font-size: 18px; color: var(--deep-green); margin-bottom: 16px; font-weight: 800;">
+                    📢 Organization Announcements
+                </h3>
+                
+                {% if announcements %}
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+                    {% for ann in announcements %}
+                    <div style="background: var(--soft-gray); padding: 16px; border-radius: 12px; border-left: 4px solid var(--ssi-green);">
+                        <div style="font-size: 14.5px; font-weight: 700; color: var(--deep-green); margin-bottom: 4px;">{{ ann.title }}</div>
+                        <div style="font-size: 13px; color: #465248; line-height: 1.5; margin-bottom: 8px;">{{ ann.content }}</div>
+                        <div style="font-size: 11px; color: #7a8a7c; font-weight: 600;">📅 {{ ann.created_at|date:"M d, Y" }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div style="padding: 20px; text-align: center; color: #7a8a7c; font-size: 13.5px; background: var(--soft-gray); border-radius: 10px;">
+                    No organization announcements posted yet.
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Tasks & Duties Box -->
+            <div style="background: var(--white); padding: 28px; border-radius: 16px; border: 1px solid #e2e8e3; box-shadow: 0 8px 30px rgba(2, 62, 36, 0.04);">
+                <h3 style="font-size: 18px; color: var(--deep-green); margin-bottom: 16px; font-weight: 800;">
+                    📋 Your Assigned Tasks & Duties
+                </h3>
+                
+                {% if user_tasks %}
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+                    {% for task in user_tasks %}
+                    <div class="{% if task.status == 'Completed' %}task-card-completed{% else %}task-card-pending{% endif %}">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 14.5px; font-weight: 700; color: var(--deep-green);">{{ task.title }}</span>
+                            <span class="{% if task.status == 'Completed' %}badge-completed{% else %}badge-pending{% endif %}">{{ task.status }}</span>
+                        </div>
+                        <div style="font-size: 13px; color: #465248; line-height: 1.5; margin-bottom: 8px;">{{ task.description }}</div>
+                        {% if task.due_date %}<div style="font-size: 11px; color: #7a8a7c; font-weight: 600;">⏳ Due: {{ task.due_date|date:"M d, Y" }}</div>{% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div style="padding: 20px; text-align: center; color: #7a8a7c; font-size: 13.5px; background: var(--soft-gray); border-radius: 10px;">
+                    No tasks currently assigned to you.
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <!-- Registered Masterclasses Section -->
+        <h3 style="font-size: 20px; color: var(--deep-green); margin-bottom: 16px; font-weight: 800;">Your Registered Masterclasses</h3>
+        
+        {% if user_registrations %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            {% for reg in user_registrations %}
+            <div style="background: var(--white); padding: 24px; border-radius: 16px; border: 1px solid #e2e8e3; box-shadow: 0 8px 30px rgba(2, 62, 36, 0.04);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <span style="background: var(--light-green); color: var(--deep-green); font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 6px;">Confirmed Seat</span>
+                    <span style="font-size: 11.5px; color: var(--ssi-green); font-weight: 700;">{{ reg.registration_id }}</span>
+                </div>
+                <h4 style="font-size: 17px; color: var(--deep-green); margin: 0 0 6px 0; font-weight: 700;">{{ reg.session.title }}</h4>
+                <p style="color: #465248; font-size: 13px; margin: 0 0 16px 0;">📅 Date: {{ reg.session.date|date:"M d, Y" }} at {{ reg.session.time|time:"P" }}</p>
+                
+                {% if reg.session.recording_url %}
+                <a href="{{ reg.session.recording_url }}" target="_blank" class="btn btn-primary btn-sm btn-block" style="text-align: center; font-size: 12px; padding: 8px;">▶ Watch Recording</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="background: var(--white); padding: 36px; border-radius: 16px; border: 1px solid #e2e8e3; text-align: center; color: #465248;">
+            <p style="margin: 0 0 12px 0; font-size: 14px;">You haven't registered for any masterclasses with this email address yet.</p>
+            <a href="{% url 'sessions_list' %}" class="btn btn-primary btn-sm" style="font-size: 12px; padding: 8px 20px;">Browse Masterclasses</a>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}

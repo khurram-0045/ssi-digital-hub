@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Masterclasses & Events — Student Success Initiative{% endblock %}
+
+{% block content %}
+<section class="section" style="padding: 30px 0 60px 0;">
+    <div class="container" style="max-width: 1200px;">
+        
+        <!-- Pulled-Up Header with Pill Badge -->
+        <div style="text-align: center; max-width: 650px; margin: 0 auto 36px auto;">
+            <div style="display: inline-block; background: var(--light-green); color: var(--deep-green); font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; border: 1px solid #c8dfcd;">
+                 Live Masterclasses & Events
+            </div>
+            <h2 style="font-size: 32px; color: var(--deep-green); margin: 0 0 8px 0; font-weight: 800;">
+                Explore SSI <span style="color: var(--ssi-green);">Masterclasses</span>
+            </h2>
+            <p style="color: #465248; font-size: 13.5px; line-height: 1.5; margin: 0;">
+                Join live upcoming sessions or explore recordings and presentation slides from past community events.
+            </p>
+        </div>
+
+        <!-- Upcoming & Live Sessions Section -->
+        <div style="margin-bottom: 40px;">
+            <h3 style="font-size: 20px; color: var(--deep-green); margin: 0 0 20px 0; font-weight: 800; text-align: center;">Upcoming & Live Sessions</h3>
+
+            {% if upcoming_sessions %}
+            <div class="grid-3-col">
+                {% for session in upcoming_sessions %}
+                <div class="interactive-card" style="background: var(--white); border-radius: 16px; border: 1px solid #e2e8e3; overflow: hidden; box-shadow: 0 8px 30px rgba(2, 62, 36, 0.04); display: flex; flex-direction: column;">
+                    
+                    {% if session.thumbnail %}
+                    <div style="height: 160px; background-size: cover; background-position: center; background-image: url('{{ session.thumbnail.url }}');"></div>
+                    {% else %}
+                    <div style="height: 140px; background: linear-gradient(135deg, var(--deep-green), var(--ssi-green)); display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 700; font-size: 15px;">
+                        🌿 SSI Live Masterclass
+                    </div>
+                    {% endif %}
+
+                    <div style="padding: 24px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <span style="background: #e6f4ea; color: #137333; font-size: 10.5px; font-weight: 800; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid #ceead6;">
+                                    🟢 UPCOMING
+                                </span>
+                                <span style="font-size: 12px; color: #465248; font-weight: 600;">📅 {{ session.date|date:"M d, Y" }}</span>
+                            </div>
+
+                            <h4 style="font-size: 18px; color: var(--deep-green); margin: 0 0 6px 0; font-weight: 700;">{{ session.title }}</h4>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; font-size: 12.5px; color: #556357;">
+                                {% if session.venue %}
+                                <div><strong>Venue:</strong> {{ session.venue }}</div>
+                                {% endif %}
+                                {% if session.speaker_name %}
+                                <div><strong>Speaker:</strong> {{ session.speaker_name }}</div>
+                                {% endif %}
+                            </div>
+
+                            <p style="color: #465248; font-size: 13px; line-height: 1.5; margin: 0 0 20px 0;">{{ session.description|truncatechars:90 }}</p>
+                        </div>
+                        
+                        <a href="{% url 'register_session' session.id %}" class="btn btn-primary btn-sm btn-block" style="text-align: center; font-size: 13px; padding: 10px; font-weight: 700;">Secure Your Seat &rarr;</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div style="background: var(--white); padding: 36px; border-radius: 16px; border: 1px solid #e2e8e3; text-align: center; color: #465248; box-shadow: 0 4px 16px rgba(2,62,36,0.03);">
+                <div style="font-size: 28px; margin-bottom: 8px;">🌿</div>
+                <h4 style="font-size: 16px; color: var(--deep-green); margin: 0 0 4px 0; font-weight: 700;">No Upcoming Sessions Right Now</h4>
+                <p style="font-size: 13px; margin: 0; color: #7a8a7c;">Stay tuned! New masterclass announcements will be posted soon.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Past Sessions Archive Section -->
+        <div>
+            <h3 style="font-size: 20px; color: var(--deep-green); margin: 0 0 20px 0; font-weight: 800; text-align: center;">Past Sessions Archive</h3>
+
+            {% if past_sessions %}
+            <div class="grid-3-col">
+                {% for session in past_sessions %}
+                <div class="interactive-card" style="background: var(--white); border-radius: 16px; border: 1px solid #e2e8e3; padding: 24px; box-shadow: 0 8px 30px rgba(2, 62, 36, 0.04); display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span style="background: var(--soft-gray); color: #465248; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 6px;">Completed</span>
+                            <span style="font-size: 12px; color: #7a8a7c; font-weight: 600;">{{ session.date|date:"M d, Y" }}</span>
+                        </div>
+                        <h4 style="font-size: 17.5px; color: var(--deep-green); margin: 0 0 8px 0; font-weight: 700;">{{ session.title }}</h4>
+                        <p style="color: #465248; font-size: 13px; line-height: 1.5; margin: 0 0 20px 0;">{{ session.description|truncatechars:90 }}</p>
+                    </div>
+                    
+                    {% if session.recording_url %}
+                    <a href="{{ session.recording_url }}" target="_blank" class="btn btn-outline btn-sm btn-block" style="text-align: center; font-size: 12px; padding: 9px;">▶ Watch Recording & Slides</a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div style="background: var(--white); padding: 30px; border-radius: 16px; border: 1px solid #e2e8e3; text-align: center; color: #7a8a7c; font-size: 13.5px;">
+                No past session archives available yet.
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</section>
+{% endblock %}

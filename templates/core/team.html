@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Team — Student Success Initiative{% endblock %}
+
+{% block content %}
+<section class="section" style="padding: 20px 0 50px 0;">
+    <div class="container" style="max-width: 1200px;">
+        
+        <!-- Pulled-Up Header with Pill Badge -->
+        <div style="text-align: center; max-width: 650px; margin: 0 auto 24px auto;">
+            <div style="display: inline-block; background: var(--light-green); color: var(--deep-green); font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; border: 1px solid #c8dfcd;">
+                👥 Leadership & Mentors
+            </div>
+            <h2 style="font-size: 32px; color: var(--deep-green); margin: 0 0 8px 0; font-weight: 800;">
+                Meet the <span style="color: var(--ssi-green);">Team</span>
+            </h2>
+            <p style="color: #465248; font-size: 13.5px; line-height: 1.5; margin: 0;">
+                Dedicated organizers, technical leads, and student mentors working together behind the scenes.
+            </p>
+        </div>
+
+        <!-- 4-Column Compact Team Grid -->
+        <div class="team-grid">
+            
+            {% for member in team_members %}
+            <div class="team-card" {% if member.linkedin_url %}onclick="window.open('{{ member.linkedin_url }}', '_blank')" style="cursor: pointer; padding: 0; overflow: hidden;"{% else %}style="padding: 0; overflow: hidden;"{% endif %}>
+                
+                <!-- Greenish SSI Top Banner Strip -->
+                {% if member.photo %}
+                <div style="height: 70px; background-size: cover; background-position: center; background-image: url('{{ member.photo.url }}'); filter: brightness(0.9);"></div>
+                {% else %}
+                <div style="height: 70px; background: linear-gradient(135deg, var(--deep-green), var(--ssi-green)); display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 700; font-size: 11px;">
+                    🌿 SSI Leadership
+                </div>
+                {% endif %}
+
+                <div style="padding: 16px 18px 18px 18px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; flex: 1; width: 100%; box-sizing: border-box;">
+                    
+                    <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                        <!-- Overlapping Avatar -->
+                        {% if member.photo %}
+                        <div class="team-avatar" style="width: 80px; height: 80px; margin-top: -45px; border: 3px solid var(--white); background-image: url('{{ member.photo.url }}');"></div>
+                        {% else %}
+                        <div class="team-avatar" style="width: 80px; height: 80px; margin-top: -45px; border: 3px solid var(--white); background: radial-gradient(circle, var(--ssi-green), var(--deep-green)); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 24px; font-weight: 800;">
+                            {{ member.name|slice:":2"|upper }}
+                        </div>
+                        {% endif %}
+
+                        <!-- Name & Role -->
+                        <h3 style="font-size: 16px; color: var(--deep-green); margin: 4px 0 2px 0; font-weight: 700;">{{ member.name }}</h3>
+                        <div style="font-size: 10px; color: var(--ssi-green); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">{{ member.role }}</div>
+                        
+                        <p style="color: #465248; font-size: 12px; line-height: 1.4; margin: 0 0 16px 0; text-align: center;">
+                            {{ member.bio|truncatechars:65 }}
+                        </p>
+                    </div>
+
+                    <!-- LinkedIn Button -->
+                    <div style="width: 100%;">
+                        {% if member.linkedin_url %}
+                        <a href="{{ member.linkedin_url }}" target="_blank" class="btn btn-primary btn-sm btn-block" onclick="event.stopPropagation();" style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 11px; padding: 6px; border-radius: 20px; text-align: center;">
+                            🔗 LinkedIn Profile
+                        </a>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+            </div>
+            {% empty %}
+            <div style="grid-column: 1 / -1; padding: 30px; background: var(--light-green); border-radius: var(--radius); color: var(--deep-green); font-weight: 600; text-align: center;">
+                No team members added yet. Add them in the Django Admin panel!
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+{% endblock %}

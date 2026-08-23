@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us — Student Success Initiative{% endblock %}
+
+{% block content %}
+<section class="section" style="padding: 20px 0 50px 0;">
+    <div class="container" style="max-width: 1100px;">
+        
+        <!-- Pulled-Up Header with Pill Badge -->
+        <div style="text-align: center; max-width: 650px; margin: 0 auto 30px auto;">
+            <div style="display: inline-block; background: var(--light-green); color: var(--deep-green); font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; border: 1px solid #c8dfcd;">
+                🌱 Learn • Improve • Succeed
+            </div>
+            <h2 style="font-size: 32px; color: var(--deep-green); margin: 0 0 8px 0; font-weight: 800;">
+                About Student Success Initiative <span style="color: var(--ssi-green);">(SSI)</span>
+            </h2>
+            <p style="color: #465248; font-size: 13.5px; line-height: 1.5; margin: 0;">
+                Empowering students to discover their purpose, build character, unlock professional opportunities, and create meaningful impact.
+            </p>
+        </div>
+
+        <!-- Mission & Vision 2-Column Boxes -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 30px;">
+            
+            <div style="background: var(--white); padding: 28px; border-radius: 14px; border: 1px solid #e2e8e3; border-top: 4px solid var(--ssi-green); box-shadow: 0 4px 16px rgba(2,62,36,0.03);">
+                <div style="font-size: 24px; margin-bottom: 10px;">🎯</div>
+                <h3 style="font-size: 17px; color: var(--deep-green); margin-bottom: 8px; font-weight: 700;">Our Core Mission</h3>
+                <p style="color: #465248; font-size: 13px; line-height: 1.5; margin: 0;">
+                    To bridge the gap between academic learning and industry demands by providing structured mentorship, hands-on technical workshops, career guidance, and a collaborative community environment.
+                </p>
+            </div>
+
+            <div style="background: var(--white); padding: 28px; border-radius: 14px; border: 1px solid #e2e8e3; border-top: 4px solid var(--deep-green); box-shadow: 0 4px 16px rgba(2,62,36,0.03);">
+                <div style="font-size: 24px; margin-bottom: 10px;">🌱</div>
+                <h3 style="font-size: 17px; color: var(--deep-green); margin-bottom: 8px; font-weight: 700;">Our Vision</h3>
+                <p style="color: #465248; font-size: 13px; line-height: 1.5; margin: 0;">
+                    To cultivate a resilient generation of future leaders, innovators, and skilled professionals equipped with both technical excellence and strong personal character.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- What We Offer Boxed Container -->
+        <div style="background: var(--white); padding: 30px; border-radius: 14px; border: 1px solid #e2e8e3; box-shadow: 0 4px 16px rgba(2,62,36,0.03);">
+            <h3 style="font-size: 18px; color: var(--deep-green); margin-bottom: 16px; font-weight: 700; border-left: 4px solid var(--ssi-green); padding-left: 10px;">What We Offer Our Community</h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+                <div style="background: var(--soft-gray); padding: 16px; border-radius: 10px; border: 1px solid #e2e8e3;">
+                    <div style="font-weight: 700; color: var(--deep-green); margin-bottom: 4px; font-size: 13.5px;">🎤 Live Masterclasses</div>
+                    <div style="font-size: 12px; color: #465248; line-height: 1.4;">Regular technical and career development sessions led by industry experts.</div>
+                </div>
+                <div style="background: var(--soft-gray); padding: 16px; border-radius: 10px; border: 1px solid #e2e8e3;">
+                    <div style="font-weight: 700; color: var(--deep-green); margin-bottom: 4px; font-size: 13.5px;">📂 Recordings & Slides</div>
+                    <div style="font-size: 12px; color: #465248; line-height: 1.4;">Complete archival access to past session videos and downloadable presentation slides.</div>
+                </div>
+                <div style="background: var(--soft-gray); padding: 16px; border-radius: 10px; border: 1px solid #e2e8e3;">
+                    <div style="font-weight: 700; color: var(--deep-green); margin-bottom: 4px; font-size: 13.5px;">🤝 Mentorship & Support</div>
+                    <div style="font-size: 12px; color: #465248; line-height: 1.4;">Guidance on project building, career pathways, and practical skill development.</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
