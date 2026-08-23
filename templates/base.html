@@ -9,7 +9,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    <!-- Professional Mobile Header Styles -->
+    <!-- Forced Mobile Header Fix -->
     <style>
         .mobile-toggle-btn {
             display: none;
@@ -20,41 +20,44 @@
         }
         .mobile-toggle-btn span {
             display: block;
-            width: 24px;
-            height: 2.5px;
-            background-color: var(--deep-green, #023e24);
+            width: 26px;
+            height: 3px;
+            background-color: #023e24;
             margin: 5px 0;
             transition: 0.3s;
         }
 
         @media (max-width: 991px) {
             .mobile-toggle-btn {
-                display: block; /* Show hamburger on mobile */
+                display: block !important;
             }
             header .container {
                 display: flex !important;
+                flex-direction: row !important;
                 justify-content: space-between !important;
                 align-items: center !important;
+                width: 100% !important;
+                padding: 0 15px !important;
             }
             header nav {
                 display: none !important;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(10px);
+                position: absolute !important;
+                top: 100% !important;
+                left: 0 !important;
+                width: 100% !important;
+                background: #ffffff !important;
                 flex-direction: column !important;
                 align-items: center !important;
-                padding: 25px 0;
-                box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-                border-bottom: 1px solid #e2e8e3;
+                padding: 20px 0 !important;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+                border-bottom: 1px solid #e2e8e3 !important;
+                z-index: 2000 !important;
             }
             header nav.active {
                 display: flex !important;
             }
             .auth-actions-container {
-                display: none !important; /* Hide desktop buttons on mobile */
+                display: none !important;
             }
         }
     </style>
@@ -65,11 +68,11 @@
         <div class="container" style="max-width: 1200px; display: flex; justify-content: space-between; align-items: center; position: relative;">
             
             <!-- Official Brand Logo (Left) -->
-            <a href="{% url 'home' %}" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
-                <img src="{% static 'images/ssi_logo.png' %}" alt="SSI Logo" style="height: 44px; width: auto; object-fit: contain;">
+            <a href="{% url 'home' %}" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                <img src="{% static 'images/ssi_logo.png' %}" alt="SSI Logo" style="height: 42px; width: auto; object-fit: contain;">
                 <div style="display: flex; flex-direction: column;">
-                    <span style="font-size: 14px; font-weight: 800; color: var(--deep-green); letter-spacing: -0.5px; line-height: 1.1;">SSI DIGITAL HUB</span>
-                    <span style="font-size: 8px; font-weight: 700; color: #7a8a7c; text-transform: uppercase; letter-spacing: 1px;">Student Success Initiative</span>
+                    <span style="font-size: 13px; font-weight: 800; color: var(--deep-green); letter-spacing: -0.5px; line-height: 1.1;">SSI DIGITAL HUB</span>
+                    <span style="font-size: 7.5px; font-weight: 700; color: #7a8a7c; text-transform: uppercase; letter-spacing: 1px;">Student Success Initiative</span>
                 </div>
             </a>
 
