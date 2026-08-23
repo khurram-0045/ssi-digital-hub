@@ -119,7 +119,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .hero-card-image {
-  height: 200px; /* Adjusted to a clean landscape ratio resembling a LinkedIn post */
+  height: 200px;
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -240,7 +240,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
 }
 
-/* ---------- Standard 3-Column Session Grid (Matching Reference Layout) ---------- */
+/* ---------- Standard 3-Column Session Grid ---------- */
 .session-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -275,7 +275,7 @@ a { color: inherit; text-decoration: none; }
   transform: translateY(-4px);
 }
 
-/* ---------- 4-Column Team Grid (Matching Resources Style) ---------- */
+/* ---------- 4-Column Team Grid ---------- */
 .team-grid {
   display: grid !important;
   grid-template-columns: repeat(4, 1fr) !important;
@@ -329,6 +329,7 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 4px 12px rgba(2,62,36,0.12);
   border: 3px solid var(--white);
 }
+
 /* ---------- Strict 4-Column Resource Grid ---------- */
 .resource-grid {
   display: grid !important;
@@ -418,7 +419,7 @@ a { color: inherit; text-decoration: none; }
     }
 }
 
-/* ---------- Interactive Card Hover Effect with All-Side Green Border ---------- */
+/* ---------- Interactive Card Hover Effect ---------- */
 .interactive-card {
     transition: all 0.3s ease;
     border: 1px solid #e2e8e3;
@@ -452,23 +453,21 @@ a { color: inherit; text-decoration: none; }
     font-weight: 700;
     border: 1px solid #c8dfcd;
 }
-  
+
+/* ---------- Clean Mobile Navbar Row Alignment Fix ---------- */
 @media (max-width: 991px) {
   header .container {
-    flex-direction: column !important;
-    gap: 15px !important;
-    padding: 10px 15px;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 15px !important;
   }
-  
-  header nav {
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 8px !important;
-  }
-  
+
   header nav .nav-link {
-    font-size: 13px;
-    padding: 4px 8px;
+    font-size: 14px;
+    padding: 8px 12px;
+    width: 100%;
+    text-align: center;
   }
 }
 
