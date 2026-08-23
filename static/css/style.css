@@ -77,6 +77,13 @@ a { color: inherit; text-decoration: none; }
   align-items: start; 
 }
 
+@media (max-width: 992px) {
+  .hero-content-wrapper {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+}
+
 .hero .eyebrow { 
   color: var(--ssi-green); 
   font-weight: 700; 
