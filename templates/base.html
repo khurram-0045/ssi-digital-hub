@@ -8,6 +8,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Mobile Navigation Responsiveness Fix -->
+    <style>
+        @media (max-width: 991px) {
+            header .container {
+                flex-direction: column !important;
+                gap: 12px !important;
+                text-align: center !important;
+            }
+            header nav {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                gap: 6px !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
