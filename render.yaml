@@ -2,12 +2,12 @@ services:
   - type: web
     name: ssi-digital-hub
     env: python
+    region: singapore
+    plan: free
     buildCommand: "./build.sh"
     startCommand: "gunicorn config.wsgi:application"
     envVars:
       - key: PYTHON_VERSION
-        value: 3.14.0
-      - key: SECRET_KEY
-        generateValue: true
-      - key: WEB_CONCURRENCY
-        value: 4
+        value: 3.12.13
+      - key: DATABASE_FROM_ENV
+        value: true

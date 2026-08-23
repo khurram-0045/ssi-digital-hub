@@ -158,9 +158,10 @@ SUPABASE_MEDIA_BUCKET = 'media'
 
 STORAGES = {
     "default": {
-        "BACKEND": "django_supabase_storage.SupabaseMediaStorage",
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
     "staticfiles": {
+        "CORE": "whitenoise.storage.CompressedManifestStaticFilesStorage",
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
