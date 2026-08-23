@@ -162,6 +162,6 @@ STORAGES = {
         "BACKEND": "django_supabase_storage.SupabaseMediaStorage",
     },
     "staticfiles": {
-        "BACKEND": "django_supabase_storage.SupabaseStaticStorage",
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
