@@ -9,7 +9,6 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    <!-- Forced Mobile Header Fix -->
     <style>
         .mobile-toggle-btn {
             display: none;
@@ -20,26 +19,20 @@
         }
         .mobile-toggle-btn span {
             display: block;
-            width: 26px;
+            width: 25px;
             height: 3px;
             background-color: #023e24;
             margin: 5px 0;
             transition: 0.3s;
         }
-
         @media (max-width: 991px) {
             .mobile-toggle-btn {
                 display: block !important;
             }
-            header .container {
-                display: flex !important;
-                flex-direction: row !important;
-                justify-content: space-between !important;
-                align-items: center !important;
-                width: 100% !important;
-                padding: 0 15px !important;
+            #desktopAuth {
+                display: none !important;
             }
-            header nav {
+            #navMenu {
                 display: none !important;
                 position: absolute !important;
                 top: 100% !important;
@@ -53,11 +46,21 @@
                 border-bottom: 1px solid #e2e8e3 !important;
                 z-index: 2000 !important;
             }
-            header nav.active {
+            #navMenu.active {
                 display: flex !important;
             }
-            .auth-actions-container {
+            .mobile-auth-section {
+                display: flex !important;
+                gap: 10px;
+                margin-top: 15px;
+            }
+        }
+        @media (min-width: 992px) {
+            .mobile-auth-section {
                 display: none !important;
+            }
+            #desktopAuth {
+                display: flex !important;
             }
         }
     </style>
@@ -65,18 +68,18 @@
 <body>
     <!-- Navigation Bar -->
     <header style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #e2e8e3; padding: 12px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(2, 62, 36, 0.03);">
-        <div class="container" style="max-width: 1200px; display: flex !important; flex-direction: row !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; padding: 0 15px !important; position: relative;">
+        <div class="container" style="max-width: 1200px; display: flex; justify-content: space-between; align-items: center; position: relative;">
             
-            <!-- Official Brand Logo (Left) -->
-            <a href="{% url 'home' %}" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                <img src="{% static 'images/ssi_logo.png' %}" alt="SSI Logo" style="height: 42px; width: auto; object-fit: contain;">
+            <!-- Official Brand Logo -->
+            <a href="{% url 'home' %}" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                <img src="{% static 'images/ssi_logo.png' %}" alt="SSI Logo" style="height: 48px; width: auto; object-fit: contain;">
                 <div style="display: flex; flex-direction: column;">
-                    <span style="font-size: 13px; font-weight: 800; color: var(--deep-green); letter-spacing: -0.5px; line-height: 1.1;">SSI DIGITAL HUB</span>
-                    <span style="font-size: 7.5px; font-weight: 700; color: #7a8a7c; text-transform: uppercase; letter-spacing: 1px;">Student Success Initiative</span>
+                    <span style="font-size: 14px; font-weight: 800; color: #023e24; letter-spacing: -0.5px; line-height: 1.1;">SSI DIGITAL HUB</span>
+                    <span style="font-size: 8px; font-weight: 700; color: #7a8a7c; text-transform: uppercase; letter-spacing: 1px;">Student Success Initiative</span>
                 </div>
             </a>
 
-            <!-- Mobile Hamburger Toggle Button (Right) -->
+            <!-- Mobile Hamburger Toggle Button -->
             <button class="mobile-toggle-btn" id="menuToggle" aria-label="Toggle Navigation">
                 <span></span>
                 <span></span>
@@ -95,7 +98,7 @@
                 <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
                 
                 <!-- Mobile Auth Buttons Inside Menu Drawer -->
-                <div style="display: flex; gap: 10px; margin-top: 15px;" class="d-lg-none">
+                <div class="mobile-auth-section">
                     {% if request.user.is_authenticated %}
                     <a href="{% url 'member_dashboard' %}" class="btn btn-primary btn-sm" style="font-size: 12.5px; padding: 8px 16px;">Dashboard</a>
                     <a href="{% url 'member_logout' %}" class="btn btn-outline btn-sm" style="font-size: 12.5px; padding: 8px 14px;">Logout</a>
@@ -106,8 +109,8 @@
                 </div>
             </nav>
 
-            <!-- Desktop Auth Actions (Right) -->
-            <div class="auth-actions-container" style="display: flex; align-items: center; gap: 10px;">
+            <!-- Desktop Auth Actions -->
+            <div id="desktopAuth" style="display: flex; align-items: center; gap: 10px;">
                 {% if request.user.is_authenticated %}
                 <a href="{% url 'member_dashboard' %}" class="btn btn-primary btn-sm" style="font-size: 12.5px; padding: 8px 16px;">Dashboard</a>
                 <a href="{% url 'member_logout' %}" class="btn btn-outline btn-sm" style="font-size: 12.5px; padding: 8px 14px;">Logout</a>
@@ -126,18 +129,16 @@
     </main>
 
     <!-- Footer -->
-    <footer style="background: var(--deep-green); color: var(--white); padding: 40px 0 20px 0; margin-top: 60px;">
+    <footer style="background: #023e24; color: #ffffff; padding: 40px 0 20px 0; margin-top: 60px;">
         <div class="container" style="max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 30px;">
-            
             <div>
-                <h3 style="color: var(--white); font-size: 18px; margin-bottom: 10px; font-weight: 700;">Student Success Initiative</h3>
+                <h3 style="color: #ffffff; font-size: 18px; margin-bottom: 10px; font-weight: 700;">Student Success Initiative</h3>
                 <p style="color: #c8dfcd; font-size: 13px; line-height: 1.5; margin: 0;">
                     Empowering students to discover their purpose, build character, and achieve professional excellence.
                 </p>
             </div>
-
             <div>
-                <h4 style="color: var(--white); font-size: 15px; margin-bottom: 10px; font-weight: 700;">Quick Links</h4>
+                <h4 style="color: #ffffff; font-size: 15px; margin-bottom: 10px; font-weight: 700;">Quick Links</h4>
                 <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.8;">
                     <li><a href="{% url 'home' %}" style="color: #c8dfcd; text-decoration: none;">Home</a></li>
                     <li><a href="{% url 'sessions_list' %}" style="color: #c8dfcd; text-decoration: none;">Masterclass Sessions</a></li>
@@ -147,25 +148,22 @@
                     <li><a href="{% url 'contact' %}" style="color: #c8dfcd; text-decoration: none;">Contact Us</a></li>
                 </ul>
             </div>
-
             <div>
-                <h4 style="color: var(--white); font-size: 15px; margin-bottom: 10px; font-weight: 700;">Contact Info</h4>
+                <h4 style="color: #ffffff; font-size: 15px; margin-bottom: 10px; font-weight: 700;">Contact Info</h4>
                 <p style="color: #c8dfcd; font-size: 13px; margin: 0 0 8px 0;">
-                    🟢 WhatsApp: <a href="https://wa.me/923001234567" target="_blank" style="color: var(--white); text-decoration: underline;">+92 300 1234567</a>
+                    🟢 WhatsApp: <a href="https://wa.me/923001234567" target="_blank" style="color: #ffffff; text-decoration: underline;">+92 300 1234567</a>
                 </p>
                 <p style="color: #c8dfcd; font-size: 13px; margin: 0 0 8px 0;">
-                    ✉️ Email: <a href="mailto:support@ssihub.edu.pk" style="color: var(--white); text-decoration: underline;">support@ssihub.edu.pk</a>
+                    ✉️ Email: <a href="mailto:support@ssihub.edu.pk" style="color: #ffffff; text-decoration: underline;">support@ssihub.edu.pk</a>
                 </p>
                 <p style="color: #c8dfcd; font-size: 13px; margin: 0 0 8px 0;">
-                    🔗 LinkedIn: <a href="https://linkedin.com/company/student-success-initiative" target="_blank" style="color: var(--white); text-decoration: underline;">SSI Official Page</a>
+                    🔗 LinkedIn: <a href="https://linkedin.com/company/student-success-initiative" target="_blank" style="color: #ffffff; text-decoration: underline;">SSI Official Page</a>
                 </p>
                 <p style="color: #c8dfcd; font-size: 13px; margin: 0;">
                     📍 Location: Islamabad, Pakistan
                 </p>
             </div>
-
         </div>
-        
         <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center; font-size: 12px; color: #c8dfcd;">
             &copy; 2026 Student Success Initiative (SSI). All rights reserved. Developed by Khurram Shehzad.
         </div>
