@@ -154,14 +154,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SUPABASE_URL = os.getenv('SUPABASE_URL', 'https://zituqrjimrncpnhjzdkc.supabase.co')
 SUPABASE_KEY = os.getenv('SUPABASE_KEY', 'sb_publishable_hy9lzApbSpzL57sH7k3NbQ_P2dmfA-f')
+SUPABASE_MEDIA_BUCKET = 'media'
 
 STORAGES = {
     "default": {
         "BACKEND": "django_supabase_storage.SupabaseMediaStorage",
-        "OPTIONS": {
-            "bucket_name": "media",
-            "visibility": "public",
-        },
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
