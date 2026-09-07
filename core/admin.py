@@ -1,8 +1,17 @@
 from django.contrib import admin
-from .models import Session, Registration, TeamMember, Resource, ContactMessage, StudentProfile, Announcement, TaskDuty,ProjectShowcase, GalleryPhoto
+from .models import (
+    Session, Registration, TeamMember, Resource, 
+    ContactMessage, StudentProfile, Announcement, 
+    TaskDuty, ProjectShowcase, GalleryPhoto
+)
 
-admin.site.register(Session)
-admin.site.register(Registration)
+@admin.register(Session)
+class SessionAdmin(admin.ModelAdmin):
+    list_display = ('__str__',)
+
+@admin.register(Registration)
+class RegistrationAdmin(admin.ModelAdmin):
+    list_display = ('__str__',)
 
 @admin.register(TeamMember)
 class TeamMemberAdmin(admin.ModelAdmin):
@@ -49,4 +58,4 @@ class ProjectShowcaseAdmin(admin.ModelAdmin):
 class GalleryPhotoAdmin(admin.ModelAdmin):
     list_display = ('title', 'event_date', 'uploaded_at')
     search_fields = ('title', 'description')
-    list_filter = ('event_date',)      
+    list_filter = ('event_date',)
