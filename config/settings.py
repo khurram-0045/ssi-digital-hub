@@ -18,7 +18,6 @@ CSRF_TRUSTED_ORIGINS = [
     'https://ssi-digital-hub-1.onrender.com',
 ]
 
-# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -26,7 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
+    'core.apps.CoreConfig',  # <--- Update this line
 ]
 
 MIDDLEWARE = [
