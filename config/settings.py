@@ -156,16 +156,24 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SUPABASE_URL = os.getenv('SUPABASE_URL', 'https://zituqrjimrncpnhjzdkc.supabase.co')
+SUPABASE_URL = os.getenv('SUPABASE_URL', 'https://xeldeahpkzfovqgvudxb.supabase.co')
 SUPABASE_KEY = os.getenv('SUPABASE_KEY', 'sb_publishable_hy9lzApbSpzL57sH7k3NbQ_P2dmfA-f')
 SUPABASE_MEDIA_BUCKET = 'media'
 
+# Supabase S3 Storage Configuration
+AWS_ACCESS_KEY_ID = os.getenv("ca09419c16decd4a8419bc40a7c3e006")
+AWS_SECRET_ACCESS_KEY = os.getenv("681d6b3e9341db0db6ec690f0764ae5ea283f2cff6c839030f5de62a1befecad")
+AWS_STORAGE_BUCKET_NAME = "media"
+AWS_S3_ENDPOINT_URL = f"{SUPABASE_URL}/storage/v1/s3"
+AWS_S3_REGION_NAME = "ap-south-1"
+AWS_S3_ADDRESSING_STYLE = "path"
+AWS_DEFAULT_ACL = None
+
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "storages.backends.s3.S3Storage",
     },
     "staticfiles": {
-        "CORE": "whitenoise.storage.CompressedManifestStaticFilesStorage",
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
