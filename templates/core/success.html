@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Successful</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center vh-100">
+    <div class="card p-4 shadow text-center" style="max-width: 500px;">
+        <h2 class="text-success mb-3">Registration Successful!</h2>
+        <p class="text-muted">Thank you, <strong>{{ registration.full_name }}</strong>, for registering for <strong>{{ session.title }}</strong>.</p>
+        <p class="small text-secondary">Your registration ID is: <strong>{{ registration.registration_id }}</strong></p>
+        <a href="/" class="btn btn-primary mt-3">Back to Home</a>
+    </div>
+</body>
+</html>
