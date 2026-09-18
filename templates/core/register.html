@@ -20,9 +20,10 @@
             <form method="POST">
                 {% csrf_token %}
                 
+                <!-- BI-05 Fix: Added pattern to restrict Full Name to letters and spaces only -->
                 <div style="margin-bottom: 16px;">
                     <label style="display: block; font-size: 12.5px; font-weight: 700; color: var(--deep-green); margin-bottom: 6px;">Full Name</label>
-                    <input type="text" name="full_name" required placeholder="Enter your full name" style="width: 100%; padding: 10px 14px; border: 1px solid #d1ded3; border-radius: 8px; font-size: 13.5px; box-sizing: border-box;">
+                    <input type="text" name="full_name" required pattern="[A-Za-zÀ-ÿ\s]+" title="Please enter letters only (no numbers or special symbols)." placeholder="Enter your full name" style="width: 100%; padding: 10px 14px; border: 1px solid #d1ded3; border-radius: 8px; font-size: 13.5px; box-sizing: border-box;">
                 </div>
 
                 <div style="margin-bottom: 16px;">
@@ -30,9 +31,10 @@
                     <input type="email" name="email" required placeholder="Enter your email (used for member dashboard)" style="width: 100%; padding: 10px 14px; border: 1px solid #d1ded3; border-radius: 8px; font-size: 13.5px; box-sizing: border-box;">
                 </div>
 
+                <!-- BI-06 Fix: Added pattern and tel type to restrict Phone input to valid phone digits and symbols (+, -, spaces) -->
                 <div style="margin-bottom: 16px;">
                     <label style="display: block; font-size: 12.5px; font-weight: 700; color: var(--deep-green); margin-bottom: 6px;">Phone / WhatsApp Number</label>
-                    <input type="text" name="phone" required placeholder="e.g. +92 300 1234567" style="width: 100%; padding: 10px 14px; border: 1px solid #d1ded3; border-radius: 8px; font-size: 13.5px; box-sizing: border-box;">
+                    <input type="tel" name="phone" required pattern="[0-9+\s\-()]+" title="Please enter a valid phone number containing numbers and phone symbols only." placeholder="e.g. +92 300 1234567" style="width: 100%; padding: 10px 14px; border: 1px solid #d1ded3; border-radius: 8px; font-size: 13.5px; box-sizing: border-box;">
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">

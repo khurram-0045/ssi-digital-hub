@@ -15,12 +15,13 @@
         </div>
 
         <div style="background: var(--white); border-radius: 16px; border: 1px solid #e2e8e3; padding: 36px; box-shadow: 0 8px 30px rgba(2, 62, 36, 0.04);">
-            <form method="POST">
+            <form method="POST" id="signupForm">
                 {% csrf_token %}
                 
+                <!-- BI-09 Fix: Added name restrictions -->
                 <div style="margin-bottom: 16px;">
                     <label style="display: block; font-size: 12.5px; font-weight: 700; color: var(--deep-green); margin-bottom: 6px;">Username</label>
-                    <input type="text" name="username" required placeholder="Choose a username" style="width: 100%; padding: 10px 14px; border: 1px solid #d1ded3; border-radius: 8px; font-size: 13.5px; box-sizing: border-box;">
+                    <input type="text" name="username" required pattern="[A-Za-zÀ-ÿ\s]+" title="Please enter letters only (no numbers or special symbols)." placeholder="Choose a username (letters only)" style="width: 100%; padding: 10px 14px; border: 1px solid #d1ded3; border-radius: 8px; font-size: 13.5px; box-sizing: border-box;">
                 </div>
 
                 <div style="margin-bottom: 16px;">
@@ -39,9 +40,22 @@
                     </div>
                 </div>
 
-                <div style="margin-bottom: 24px;">
+                <!-- BI-10 & BI-11 Fix: Password field with Show/Hide toggle -->
+                <div style="margin-bottom: 16px;">
                     <label style="display: block; font-size: 12.5px; font-weight: 700; color: var(--deep-green); margin-bottom: 6px;">Password</label>
-                    <input type="password" name="password" required placeholder="Create a password" style="width: 100%; padding: 10px 14px; border: 1px solid #d1ded3; border-radius: 8px; font-size: 13.5px; box-sizing: border-box;">
+                    <div style="position: relative;">
+                        <input type="password" name="password" id="password" required placeholder="Create a password" style="width: 100%; padding: 10px 40px 10px 14px; border: 1px solid #d1ded3; border-radius: 8px; font-size: 13.5px; box-sizing: border-box;">
+                        <span onclick="togglePassword('password', 'eyeIcon1')" id="eyeIcon1" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 16px;" title="Show/Hide Password">👁️</span>
+                    </div>
+                </div>
+
+                <!-- BI-10 & BI-11 Fix: Confirm Password field with Show/Hide toggle -->
+                <div style="margin-bottom: 24px;">
+                    <label style="display: block; font-size: 12.5px; font-weight: 700; color: var(--deep-green); margin-bottom: 6px;">Confirm Password</label>
+                    <div style="position: relative;">
+                        <input type="password" name="confirm_password" id="confirm_password" required placeholder="Confirm your password" style="width: 100%; padding: 10px 40px 10px 14px; border: 1px solid #d1ded3; border-radius: 8px; font-size: 13.5px; box-sizing: border-box;">
+                        <span onclick="togglePassword('confirm_password', 'eyeIcon2')" id="eyeIcon2" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 16px;" title="Show/Hide Password">👁️</span>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-block" style="padding: 12px; font-size: 14px; font-weight: 700; text-align: center; margin-bottom: 16px;">
@@ -56,4 +70,28 @@
 
     </div>
 </section>
+
+<!-- Script for Show/Hide Password functionality & verification -->
+<script>
+    function togglePassword(fieldId, iconId) {
+        const field = document.getElementById(fieldId);
+        const icon = document.getElementById(iconId);
+        if (field.type === "password") {
+            field.type = "text";
+            icon.textContent = "🙈";
+        } else {
+            field.type = "password";
+            icon.textContent = "👁️";
+        }
+    }
+
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+        const pass = document.getElementById('password').value;
+        const confirmPass = document.getElementById('confirm_password').value;
+        if (pass !== confirmPass) {
+            e.preventDefault();
+            alert("Passwords do not match! Please check and try again.");
+        }
+    });
+</script>
 {% endblock %}

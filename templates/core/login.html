@@ -24,9 +24,13 @@
                     <input type="text" name="username" required placeholder="Enter your username" style="width: 100%; padding: 10px 14px; border: 1px solid #d1ded3; border-radius: 8px; font-size: 13.5px; box-sizing: border-box;">
                 </div>
 
+                <!-- BI-12 Fix: Password field with Show/Hide toggle -->
                 <div style="margin-bottom: 24px;">
                     <label style="display: block; font-size: 12.5px; font-weight: 700; color: var(--deep-green); margin-bottom: 6px;">Password</label>
-                    <input type="password" name="password" required placeholder="Enter your password" style="width: 100%; padding: 10px 14px; border: 1px solid #d1ded3; border-radius: 8px; font-size: 13.5px; box-sizing: border-box;">
+                    <div style="position: relative;">
+                        <input type="password" name="password" id="login_password" required placeholder="Enter your password" style="width: 100%; padding: 10px 40px 10px 14px; border: 1px solid #d1ded3; border-radius: 8px; font-size: 13.5px; box-sizing: border-box;">
+                        <span onclick="toggleLoginPassword()" id="loginEyeIcon" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 16px;" title="Show/Hide Password">👁️</span>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-block" style="padding: 12px; font-size: 14px; font-weight: 700; text-align: center; margin-bottom: 16px;">
@@ -41,4 +45,19 @@
 
     </div>
 </section>
+
+<!-- Script for Show/Hide Password functionality on Login -->
+<script>
+    function toggleLoginPassword() {
+        const field = document.getElementById('login_password');
+        const icon = document.getElementById('loginEyeIcon');
+        if (field.type === "password") {
+            field.type = "text";
+            icon.textContent = "🙈";
+        } else {
+            field.type = "password";
+            icon.textContent = "👁️";
+        }
+    }
+</script>
 {% endblock %}
