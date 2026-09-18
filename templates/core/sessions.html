@@ -9,7 +9,7 @@
         <!-- Pulled-Up Header with Pill Badge -->
         <div style="text-align: center; max-width: 650px; margin: 0 auto 36px auto;">
             <div style="display: inline-block; background: var(--light-green); color: var(--deep-green); font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; border: 1px solid #c8dfcd;">
-                 Live Masterclasses & Events
+                Live Masterclasses & Events
             </div>
             <h2 style="font-size: 32px; color: var(--deep-green); margin: 0 0 8px 0; font-weight: 800;">
                 Explore SSI <span style="color: var(--ssi-green);">Masterclasses</span>
@@ -75,24 +75,47 @@
 
         <!-- Past Sessions Archive Section -->
         <div>
-            <h3 style="font-size: 20px; color: var(--deep-green); margin: 0 0 20px 0; font-weight: 800; text-align: center;">Past Sessions Archive</h3>
+            <!-- BI-03 Fix: Added section heading text and clear description subtitle -->
+            <div style="text-align: center; margin-bottom: 24px;">
+                <h3 style="font-size: 20px; color: var(--deep-green); margin: 0 0 6px 0; font-weight: 800;">Past Sessions Archive</h3>
+                <p style="color: #465248; font-size: 13px; margin: 0;">Explore recordings, presentation slides, and learning materials from all previously completed community masterclasses.</p>
+            </div>
 
             {% if past_sessions %}
             <div class="grid-3-col">
                 {% for session in past_sessions %}
-                <div class="interactive-card" style="background: var(--white); border-radius: 16px; border: 1px solid #e2e8e3; padding: 24px; box-shadow: 0 8px 30px rgba(2, 62, 36, 0.04); display: flex; flex-direction: column; justify-content: space-between;">
-                    <div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                            <span style="background: var(--soft-gray); color: #465248; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 6px;">Completed</span>
-                            <span style="font-size: 12px; color: #7a8a7c; font-weight: 600;">{{ session.date|date:"M d, Y" }}</span>
-                        </div>
-                        <h4 style="font-size: 17.5px; color: var(--deep-green); margin: 0 0 8px 0; font-weight: 700;">{{ session.title }}</h4>
-                        <p style="color: #465248; font-size: 13px; line-height: 1.5; margin: 0 0 20px 0;">{{ session.description|truncatechars:90 }}</p>
-                    </div>
+                <div class="interactive-card" style="background: var(--white); border-radius: 16px; border: 1px solid #e2e8e3; overflow: hidden; box-shadow: 0 8px 30px rgba(2, 62, 36, 0.04); display: flex; flex-direction: column;">
                     
-                    {% if session.recording_url %}
-                    <a href="{{ session.recording_url }}" target="_blank" class="btn btn-outline btn-sm btn-block" style="text-align: center; font-size: 12px; padding: 9px;">▶ Watch Recording & Slides</a>
+                    <!-- BI-04 Fix: Thumbnail support for past session cards matching upcoming cards -->
+                    {% if session.thumbnail %}
+                    <div style="height: 160px; background-size: cover; background-position: center; background-image: url('{{ session.thumbnail.url }}');"></div>
+                    {% else %}
+                    <div style="height: 140px; background: linear-gradient(135deg, #4a5c4d, #7a8a7c); display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 700; font-size: 15px;">
+                        📂 Past Archive Session
+                    </div>
                     {% endif %}
+
+                    <div style="padding: 24px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <span style="background: var(--soft-gray); color: #465248; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 6px;">Completed</span>
+                                <span style="font-size: 12px; color: #7a8a7c; font-weight: 600;">{{ session.date|date:"M d, Y" }}</span>
+                            </div>
+                            <h4 style="font-size: 17.5px; color: var(--deep-green); margin: 0 0 8px 0; font-weight: 700;">{{ session.title }}</h4>
+                            <p style="color: #465248; font-size: 13px; line-height: 1.5; margin: 0 0 20px 0;">{{ session.description|truncatechars:90 }}</p>
+                        </div>
+                        
+                        <!-- BI-04 Fix: Clean dual action layout for Download Slides & Recording link -->
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            {% if session.recording_url %}
+                            <a href="{{ session.recording_url }}" target="_blank" class="btn btn-outline btn-sm btn-block" style="text-align: center; font-size: 12px; padding: 9px;">▶ Watch Recording</a>
+                            {% endif %}
+                            
+                            {% if session.slides_file %}
+                            <a href="{{ session.slides_file.url }}" download class="btn btn-primary btn-sm btn-block" style="text-align: center; font-size: 12px; padding: 9px; background-color: var(--deep-green); border-color: var(--deep-green);">⬇ Download Slides</a>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
